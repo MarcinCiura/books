@@ -225,8 +225,9 @@ class Application(tk.Frame):
         SELECT id, shelf, author, title, borrowed, translator, original_title
         FROM Books
         JOIN BooksFTS ON Books.id = BooksFTS.rowid
-        WHERE BooksFTS.content MATCH '{}'
-        """.format(search_pattern))
+        WHERE BooksFTS.content MATCH ?
+        """,
+        (search_pattern,))
     self.tree_view.delete(*self.tree_view.get_children())
     for row in cursor.fetchall():
       columns = [x if x is not None else '' for x in row]
